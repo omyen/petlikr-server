@@ -25,38 +25,7 @@ var api = new ParseServer({
     process.env.S3_SECRET_KEY,
     process.env.S3_BUCKET,
     {directAccess: false}
-  ),
-  emailAdapter: {
-    module: 'parse-server-simple-mailgun-adapter',
-      options: {
-      apiKey: process.env.MAILGUN_API_KEY,
-      domain: process.env.MAILGUN_DOMAIN,
-      fromAddress: 'noreply@' + process.env.MAILGUN_DOMAIN
-    }
-  },
-  push: {
-      android: {
-        senderId: process.env.GCM_SENDER_ID,
-        apiKey: process.env.GCM_API_KEY
-      },
-      ios: [
-        {
-          pfx: 'DevPush.p12',
-          passphrase: process.env.DEV_PUSH_CERT_PASSPHRASE,
-          bundleId: 'com.doubledipcompany.doubledip',
-          production: false
-        },
-        {
-          pfx: 'ProdPush.p12',
-          passphrase: process.env.PROD_PUSH_CERT_PASSPHRASE,
-          bundleId: 'com.doubledipcompany.doubledip', 
-          production: true // Prod
-        }
-      ]
-    },
-    liveQuery: {
-      classNames: ['Pet']
-    }
+  )
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
