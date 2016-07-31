@@ -24,7 +24,7 @@ var api = new ParseServer({
     process.env.S3_ACCESS_KEY,
     process.env.S3_SECRET_KEY,
     process.env.S3_BUCKET,
-    {directAccess: false}
+    {directAccess: true}
   )
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
