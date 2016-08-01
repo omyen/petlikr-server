@@ -30,3 +30,7 @@ Parse.Cloud.define('signS3', function(req, res) {
 	});
 	
 });
+
+Parse.Cloud.define('getLatestBatchNumber', function(req, res) {
+	res.success(1337);
+});
