@@ -13,7 +13,7 @@ Parse.Cloud.define('signS3', function(req, res) {
 		Key: fileName,
 		Expires: 60,
 		ContentEncoding: 'base64',
-    	ContentType: 'image/jpeg'
+    	ContentType: 'image/jpeg',
 		ACL: 'public-read'
 	};
 
