@@ -17,7 +17,8 @@
     "parse": "~1.8.0",
     "parse-server": "2.2.10",
     "parse-image": "0.1.1",
-    "moment-timezone": "0.5.4"
+    "moment-timezone": "0.5.4",
+    "aws-sdk": "2.x"
   },
   "scripts": {
     "start": "node index.js"
