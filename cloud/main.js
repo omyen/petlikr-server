@@ -8,12 +8,12 @@ const S3_BUCKET = process.env.S3_BUCKET;
 Parse.Cloud.define('signS3', function(req, res) {
 	const s3 = new aws.S3();
 	const fileName = req.params.fileName;
-	const fileType = req.params.fileType;
 	const s3Params = {
 		Bucket: S3_BUCKET,
 		Key: fileName,
 		Expires: 60,
-		ContentType: fileType,
+		ContentEncoding: 'base64',
+    	ContentType: 'image/jpeg'
 		ACL: 'public-read'
 	};
 
