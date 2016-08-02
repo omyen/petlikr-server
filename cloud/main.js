@@ -7,7 +7,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
 
 Parse.Cloud.define('signS3', function(req, res) {
 
-	var s3 = new AWS.S3();
+	var s3 = new aws.S3();
 	var params = {Bucket: process.env.S3_BUCKET, Key: req.params.fileName};
 	s3.getSignedUrl('getObject', params, function (err, url) {
   		if(err){
