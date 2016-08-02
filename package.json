@@ -19,7 +19,7 @@
     "parse-image": "0.1.1",
     "moment-timezone": "0.5.4",
     "aws-sdk": "2.x",
-    "amazon-s3-url-signer"
+    "amazon-s3-url-signer":"0.0.7"
   },
   "scripts": {
     "start": "node index.js"
