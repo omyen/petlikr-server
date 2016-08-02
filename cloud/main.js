@@ -1,17 +1,40 @@
 const aws = require('aws-sdk');
 var log = require('loglevel');
-var sig= require('amazon-s3-url-signer');
 
 log.setLevel('debug');
 
 const S3_BUCKET = process.env.S3_BUCKET;
 
 Parse.Cloud.define('signS3', function(req, res) {
-	var bucket = sig.urlSigner(process.env.S3_ACCESS_KEY, process.env.S3_SECRET_KEY);
 
-	var url = bucket.getUrl('PUT', req.params.fileName, process.env.S3_BUCKET, 10); //url expires in 10 minutes
+	var s3 = new AWS.S3();
+	var params = {Bucket: process.env.S3_BUCKET, Key: req.params.fileName};
+	s3.getSignedUrl('getObject', params, function (err, url) {
+  		if(err){
+			log.error(err);
+			return res.error();
+		}
+		res.success(data);
+	});
+	// const s3 = new aws.S3();
+	// const fileName = req.params.fileName;
+	// const s3Params = {
+	// 	Bucket: S3_BUCKET,
+	// 	Key: fileName,
+	// 	Expires: 60,
+	// 	ContentEncoding: 'base64',
+ //    	ContentType: 'image/jpeg',
+	// 	ACL: 'public-read'
+	// };
+
+	// s3.getSignedUrl('putObject', s3Params, (err, data) => {
+	// 	if(err){
+	// 		log.error(err);
+	// 		return res.error();
+	// 	}
+	// 	res.success(data);
+	// });
 	
-	res.success(url);
 });
 
 Parse.Cloud.define('getLatestBatchNumber', function(req, res) {
