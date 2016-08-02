@@ -10,10 +10,10 @@ Parse.Cloud.define('signS3', function(req, res) {
 	const fileName = req.params.fileName;
 	const s3Params = {
 		Bucket: S3_BUCKET,
-		Key: process.env.S3_ACCESS_KEY,
-		Expires: 60,
-		ContentEncoding: 'base64',
-    	ContentType: 'image/jpeg',
+		Key: fileName,
+		//Expires: 60,
+		// ContentEncoding: 'base64',
+  //   	ContentType: 'image/jpeg',
 		ACL: 'public-read'
 	};
 
@@ -22,7 +22,11 @@ Parse.Cloud.define('signS3', function(req, res) {
 			log.error(err);
 			return res.error();
 		}
-		res.success(JSON.stringify(data));
+		const returnData = {
+			signedRequest: data,
+			url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+		};
+		res.success(JSON.stringify(returnData));
 	});
 	
 });
