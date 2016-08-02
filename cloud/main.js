@@ -6,10 +6,9 @@ log.setLevel('debug');
 const S3_BUCKET = process.env.S3_BUCKET;
 
 Parse.Cloud.define('signS3', function(req, res) {
-
-	var s3 = new aws.S3();
-	var params = {Bucket: process.env.S3_BUCKET, Key: req.params.fileName};
-	s3.getSignedUrl('getObject', params, function (err, url) {
+	var AWS = require('aws-sdk');
+	var s3 = new AWS.S3({params: {Bucket: process.env.S3_BUCKET, Key: process.env.S3_ACCESS_KEY}});
+	s3.getSignedUrl('getObject', {ACL: 'public-read'}, function (err, url) {
   		if(err){
 			log.error(err);
 			return res.error();
