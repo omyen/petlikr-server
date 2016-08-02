@@ -9,7 +9,7 @@ const S3_BUCKET = process.env.S3_BUCKET;
 Parse.Cloud.define('signS3', function(req, res) {
 	var bucket = sig.urlSigner(process.env.S3_ACCESS_KEY, process.env.S3_SECRET_KEY);
 
-	var url = bucket1.getUrl('PUT', req.params.fileName, process.env.S3_BUCKET, 10); //url expires in 10 minutes
+	var url = bucket.getUrl('PUT', req.params.fileName, process.env.S3_BUCKET, 10); //url expires in 10 minutes
 	
 	res.success(url);
 });
