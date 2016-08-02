@@ -14,7 +14,7 @@ Parse.Cloud.define('signS3', function(req, res) {
 			log.error(err);
 			return res.error();
 		}
-		res.success(data);
+		res.success(url);
 	});
 	// const s3 = new aws.S3();
 	// const fileName = req.params.fileName;
