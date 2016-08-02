@@ -27,7 +27,7 @@ Parse.Cloud.define('signS3', function(req, res) {
 			signedRequest: data,
 			url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
 		};
-		res.success(data);
+		res.success(returnData);
 	});
 	
 });
