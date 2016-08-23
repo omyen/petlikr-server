@@ -37,10 +37,10 @@ Parse.Cloud.beforeSave('_User', function(req, res)
 	try{
 		var dirtyKeys = req.object.dirtyKeys();
 		log.debug('[beforeSave User] Info=\'User\' dirtyKeysLength=' + dirtyKeys.length + ' dirtyKeys=' + dirtyKeys);
-		var shouldReturnImmediately = false;
+		var shouldReturnImmediately = true;
 		for (var i = 0; i < dirtyKeys.length; ++i) {
 			if(dirtyKeys[i]=='numPats'){
-				shouldReturnImmediately = true;
+				shouldReturnImmediately = false;
 				var query = new Parse.Query("User");
 				query.greaterThan('numPats', req.object.get('numPats'));	
 				query.count().then(function(result){
