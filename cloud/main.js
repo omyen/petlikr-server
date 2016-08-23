@@ -32,13 +32,14 @@ Parse.Cloud.define('signS3', function(req, res) {
 	
 });
 
-Parse.Cloud.afterSave('User', function(req) 
+Parse.Cloud.afterSave('_User', function(req) 
 {	
 	try{
 		var user = req.object;
 		var query = Parse.Query("User");
 		query.greaterThan('numPats', user.get('numPats'));
 		query.count().then(function(result){
+			log.debug('[afterSave User] Info=\'Got count\' count=' + result);
 			user.set('rank', result+1);
 			return user.save();
 		}).then(function(result){
