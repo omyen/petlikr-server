@@ -32,22 +32,31 @@ Parse.Cloud.define('signS3', function(req, res) {
 	
 });
 
-Parse.Cloud.afterSave('_User', function(req) 
+Parse.Cloud.beforeSave('_User', function(req, res) 
 {	
 	try{
-		var user = req.object;
-		var query = new Parse.Query("User");
-		query.greaterThan('numPats', user.get('numPats'));	
-		query.count().then(function(result){
-			log.debug('[afterSave User] Info=\'Got count\' count=' + result);
-			user.set('rank', result+1);
-			return user.save();
-		}).then(function(result){
-			log.debug('[afterSave User] Info=\'Saved user\' rank=' + result.get('rank'));
-			return;
-		});
+		var dirtyKeys = req.object.dirtyKeys();
+		log.debug('[beforeSave User] Info=\'User\' dirtyKeysLength=' + dirtyKeys.length + ' dirtyKeys=' + dirtyKeys);
+		var shouldReturnImmediately = false;
+		for (var i = 0; i < dirtyKeys.length; ++i) {
+			if(dirtyKeys[i]=='numPats'){
+				shouldReturnImmediately = true;
+				var query = new Parse.Query("User");
+				query.greaterThan('numPats', req.object.get('numPats'));	
+				query.count().then(function(result){
+					log.debug('[beforeSave User] Info=\'Got count\' count=' + result);
+					req.object.set('rank', result+1);
+					res.success();
+				})
+			}
+		}
+		if(shouldReturnImmediately){
+			res.success();
+		}
 	} catch (e){
-		log.error('[afterSave User] Info=\'Failed\' error=' + e.message);
-		return; 
+		log.error('[beforeSave User] Info=\'Failed\' error=' + e.message);
+		res.success();
 	}
+	//either way, return success to the user
+	
 });
