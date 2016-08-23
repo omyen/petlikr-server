@@ -32,6 +32,20 @@ Parse.Cloud.define('signS3', function(req, res) {
 	
 });
 
-Parse.Cloud.define('getLatestBatchNumber', function(req, res) {
-	res.success(1337);
+Parse.Cloud.afterSave('User', function(req) 
+{	
+	try{
+		var user = req.object;
+		var query = Parse.Query("User");
+		query.greaterThan('numPats', user.get('numPats'));
+		query.count().then(function(result){
+			user.set('rank', result+1);
+			return user.save();
+		}).then(function(result){
+			return;
+		});
+	} catch (e){
+		log.error('[afterSave User] Info=\'Failed\' error=' + e.message);
+		return; 
+	}
 });
