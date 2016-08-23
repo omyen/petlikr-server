@@ -38,6 +38,8 @@ Parse.Cloud.afterSave('_User', function(req)
 		var user = req.object;
 		var query = Parse.Query("User");
 		query.greaterThan('numPats', user.get('numPats'));
+		log.debug('[afterSave Usadaader] Info=\'Got count\' count=' + result);
+			
 		query.count().then(function(result){
 			log.debug('[afterSave User] Info=\'Got count\' count=' + result);
 			user.set('rank', result+1);
