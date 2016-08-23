@@ -43,6 +43,7 @@ Parse.Cloud.afterSave('_User', function(req)
 			user.set('rank', result+1);
 			return user.save();
 		}).then(function(result){
+			log.debug('[afterSave User] Info=\'Saved user\' rank=' + result.get('rank'));
 			return;
 		});
 	} catch (e){
