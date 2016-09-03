@@ -34,6 +34,14 @@ Parse.Cloud.define('signS3', function(req, res) {
 
 Parse.Cloud.beforeSave('_User', function(req, res) 
 {	
+	var user = req.object;
+	//first check to see if it's a brand new user
+	if(!user.existed()){
+		user.set('rank', 101);
+		res.success();
+		return;
+	}
+
 	try{
 		var dirtyKeys = req.object.dirtyKeys();
 		log.debug('[beforeSave User] Info=\'User\' dirtyKeysLength=' + dirtyKeys.length + ' dirtyKeys=' + dirtyKeys);
