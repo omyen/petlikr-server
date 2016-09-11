@@ -86,7 +86,9 @@ Parse.Cloud.define('givePoints', function(req, res){
 	photo.increment('numPats');
 	toSave.push(photo);
 
-	Parse.Object.saveAll(toSave);
+	Parse.Object.saveAll(toSave).then(function(){
+		res.success('OK');
+	})
 });
 
 Parse.Cloud.define('giveReport', function(req, res){
@@ -113,5 +115,7 @@ Parse.Cloud.define('giveReport', function(req, res){
 	report.set('reporter', req.object.id);
 	toSave.push(report);
 
-	Parse.Object.saveAll(toSave);
+	Parse.Object.saveAll(toSave).then(function(){
+		res.success('OK');
+	})
 });
