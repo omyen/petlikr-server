@@ -68,3 +68,50 @@ Parse.Cloud.beforeSave('_User', function(req, res)
 	//either way, return success to the user
 	
 });
+
+Parse.Cloud.define('givePoints', function(req, res){
+	Parse.Cloud.useMasterKey();
+
+	var toSave = [];
+
+	var User = Parse.Object.extend('_User');
+	var user = new User();
+	user.id = req.params.userId;
+	user.increment('numPats');
+	toSave.push(user);
+	
+	var Photo = Parse.Object.extend('Photo');
+	var photo = new Photo();
+	photo.id = req.params.photoId;
+	photo.increment('numPats');
+	toSave.push(photo);
+
+	Parse.Object.saveAll(toSave);
+});
+
+Parse.Cloud.define('giveReport', function(req, res){
+	Parse.Cloud.useMasterKey();
+
+	var toSave = [];
+
+	var User = Parse.Object.extend('_User');
+	var user = new User();
+	user.id = req.params.userId;
+	user.increment('numReports');
+	toSave.push(user);
+	
+	var Photo = Parse.Object.extend('Photo');
+	var photo = new Photo();
+	photo.id = req.params.photoId;
+	photo.increment('numReports');
+	toSave.push(photo);
+
+	var Report = Parse.Object.extend('Report');
+	var report = new Report();
+	report.set('reportedUser', req.params.userId);
+	report.set('reportedPhoto', req.params.photoId);
+	report.set('reporter', req.object.id);
+	toSave.push(report);
+
+	Parse.Object.saveAll(toSave);
+});
