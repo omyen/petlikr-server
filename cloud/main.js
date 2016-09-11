@@ -90,7 +90,7 @@ Parse.Cloud.define('givePoints', function(req, res){
 		res.success('OK');
 	})
 });
-
+ 
 Parse.Cloud.define('giveReport', function(req, res){
 	Parse.Cloud.useMasterKey();
 
