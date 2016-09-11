@@ -112,7 +112,7 @@ Parse.Cloud.define('giveReport', function(req, res){
 	var report = new Report();
 	report.set('reportedUser', req.params.userId);
 	report.set('reportedPhoto', req.params.photoId);
-	report.set('reporter', req.object.id);
+	report.set('reporter', req.params.reporterId);
 	toSave.push(report);
 
 	Parse.Object.saveAll(toSave).then(function(){
