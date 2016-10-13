@@ -56,6 +56,9 @@ Parse.Cloud.beforeSave('_User', function(req, res)
 					req.object.set('rank', result+1);
 					res.success();
 				})
+			} else if(dirtyKeys[i]=='numSavedPhotos'){
+				//set to unlimited for now
+				req.object.set('numSavedPhotos', 0);
 			}
 		}
 		if(shouldReturnImmediately){
